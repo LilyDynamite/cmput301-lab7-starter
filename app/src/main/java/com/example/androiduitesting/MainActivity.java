@@ -2,8 +2,11 @@ package com.example.androiduitesting;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout nameField;
     ArrayAdapter<String> cityAdapter;
     ArrayList<String> dataList;
+    static String nameToDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,5 +68,25 @@ public class MainActivity extends AppCompatActivity {
                 cityAdapter.clear();
             }
         });
+
+        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //item was clicked
+                Log.println(Log.WARN, "LILY", "item clicked");
+                nameToDisplay = cityAdapter.getItem(i); //name we will be able to give to ShowActivity
+
+                Intent showActivityView = new Intent(MainActivity.this, ShowActivity.class);
+
+                startActivity(showActivityView);
+
+            }
+        });
+
+    }
+
+    //Returns the name to display on the ShowActivity screen
+    public static String getTextToDisplay()
+    {
+        return nameToDisplay;
     }
 }
